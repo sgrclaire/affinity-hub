@@ -97,29 +97,35 @@ const Index = () => {
               <CardContent className="space-y-6">
                 <RadioGroup value={matchPreference || ""} onValueChange={handlePreferenceChange}>
                   <div className="space-y-4">
-                    <div className="flex items-start space-x-4 p-6 rounded-lg border-2 border-border hover:border-accent transition-colors cursor-pointer">
+                    <Label 
+                      htmlFor="similar" 
+                      className="flex items-start space-x-4 p-6 rounded-lg border-2 border-border hover:border-accent transition-colors cursor-pointer"
+                    >
                       <RadioGroupItem value="similar" id="similar" className="mt-1" />
-                      <Label htmlFor="similar" className="cursor-pointer flex-1 space-y-2">
+                      <div className="flex-1 space-y-2">
                         <div className="font-display font-semibold text-xl">Qui se ressemble s'assemble</div>
                         <p className="text-muted-foreground leading-relaxed">
                           Trouvez des personnes qui partagent vos passions culturelles. 
                           Les mêmes genres musicaux, les mêmes auteurs préférés, les mêmes films cultes.
                           Une connexion basée sur l'homophilie et les affinités communes.
                         </p>
-                      </Label>
-                    </div>
+                      </div>
+                    </Label>
 
-                    <div className="flex items-start space-x-4 p-6 rounded-lg border-2 border-border hover:border-accent transition-colors cursor-pointer">
+                    <Label 
+                      htmlFor="opposite" 
+                      className="flex items-start space-x-4 p-6 rounded-lg border-2 border-border hover:border-accent transition-colors cursor-pointer"
+                    >
                       <RadioGroupItem value="opposite" id="opposite" className="mt-1" />
-                      <Label htmlFor="opposite" className="cursor-pointer flex-1 space-y-2">
+                      <div className="flex-1 space-y-2">
                         <div className="font-display font-semibold text-xl">Les opposés s'attirent</div>
                         <p className="text-muted-foreground leading-relaxed">
                           Découvrez des profils complémentaires qui élargiront vos horizons.
                           Des goûts différents qui se complètent, une richesse dans la diversité.
                           Une approche basée sur l'hétérophilie et la sérendipité.
                         </p>
-                      </Label>
-                    </div>
+                      </div>
+                    </Label>
                   </div>
                 </RadioGroup>
 
