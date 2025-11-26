@@ -2,10 +2,8 @@ import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ProfileCard } from "@/components/ProfileCard";
+import { PersonalityTest } from "@/components/PersonalityTest";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { Heart, Puzzle, Sparkles } from "lucide-react";
 import { mockProfiles } from "@/data/mockProfiles";
 import { useToast } from "@/hooks/use-toast";
@@ -13,25 +11,30 @@ import heroBackground from "@/assets/hero-background.jpg";
 
 const Index = () => {
   const [matchPreference, setMatchPreference] = useState<"similar" | "opposite" | null>(null);
+  const [testStarted, setTestStarted] = useState(false);
   const { toast } = useToast();
 
-  const handlePreferenceChange = (value: string) => {
-    const preference = value as "similar" | "opposite";
-    setMatchPreference(preference);
+  const handleTestComplete = (result: "similar" | "opposite") => {
+    setMatchPreference(result);
     
-    // Basculer le mode sombre/clair selon la préférence
-    if (preference === "opposite") {
+    // Basculer le mode sombre/clair selon le résultat
+    if (result === "opposite") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
 
     toast({
-      title: preference === "similar" ? "Mode Similarité activé" : "Mode Opposés activé",
-      description: preference === "similar" 
+      title: result === "similar" ? "Mode Similarité activé" : "Mode Opposés activé",
+      description: result === "similar" 
         ? "Vous verrez des profils qui vous ressemblent" 
         : "Vous verrez des profils complémentaires",
     });
+
+    // Scroll vers les profils après un délai
+    setTimeout(() => {
+      document.getElementById('profiles-section')?.scrollIntoView({ behavior: 'smooth' });
+    }, 2500);
   };
 
   const filteredProfiles = matchPreference 
@@ -68,11 +71,25 @@ const Index = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-              <Button size="lg" className="text-lg px-8 py-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-6 bg-accent hover:bg-accent/90 text-accent-foreground hover-scale"
+                onClick={() => {
+                  setTestStarted(true);
+                  document.getElementById('personality-test')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 <Sparkles className="mr-2 h-5 w-5" />
                 Commencer le test
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8 py-6"
+                onClick={() => {
+                  document.getElementById('personality-test')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Découvrir Affinity
               </Button>
             </div>
@@ -84,68 +101,30 @@ const Index = () => {
       <section className="py-20 bg-card" id="personality-test">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto">
-            <Card className="shadow-[var(--shadow-3d)]">
-              <CardHeader className="text-center space-y-4">
+            {!testStarted ? (
+              <div className="text-center space-y-8 py-16 animate-fade-in">
                 <div className="flex justify-center">
-                  <Heart className="h-12 w-12 text-accent" />
+                  <Heart className="h-20 w-20 text-accent animate-pulse" />
                 </div>
-                <CardTitle className="text-4xl font-display">Test de Personnalité</CardTitle>
-                <CardDescription className="text-lg">
-                  Choisissez votre approche pour découvrir des profils compatibles
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <RadioGroup value={matchPreference || ""} onValueChange={handlePreferenceChange}>
-                  <div className="space-y-4">
-                    <Label 
-                      htmlFor="similar" 
-                      className="flex items-start space-x-4 p-6 rounded-lg border-2 border-border hover:border-accent transition-colors cursor-pointer"
-                    >
-                      <RadioGroupItem value="similar" id="similar" className="mt-1" />
-                      <div className="flex-1 space-y-2">
-                        <div className="font-display font-semibold text-xl">Qui se ressemble s'assemble</div>
-                        <p className="text-muted-foreground leading-relaxed">
-                          Trouvez des personnes qui partagent vos passions culturelles. 
-                          Les mêmes genres musicaux, les mêmes auteurs préférés, les mêmes films cultes.
-                          Une connexion basée sur l'homophilie et les affinités communes.
-                        </p>
-                      </div>
-                    </Label>
-
-                    <Label 
-                      htmlFor="opposite" 
-                      className="flex items-start space-x-4 p-6 rounded-lg border-2 border-border hover:border-accent transition-colors cursor-pointer"
-                    >
-                      <RadioGroupItem value="opposite" id="opposite" className="mt-1" />
-                      <div className="flex-1 space-y-2">
-                        <div className="font-display font-semibold text-xl">Les opposés s'attirent</div>
-                        <p className="text-muted-foreground leading-relaxed">
-                          Découvrez des profils complémentaires qui élargiront vos horizons.
-                          Des goûts différents qui se complètent, une richesse dans la diversité.
-                          Une approche basée sur l'hétérophilie et la sérendipité.
-                        </p>
-                      </div>
-                    </Label>
-                  </div>
-                </RadioGroup>
-
-                {matchPreference && (
-                  <div className="pt-6 text-center">
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Votre préférence a été enregistrée. Découvrez les profils correspondants ci-dessous.
-                    </p>
-                    <Button 
-                      onClick={() => {
-                        document.getElementById('profiles-section')?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      className="bg-accent hover:bg-accent/90 text-accent-foreground"
-                    >
-                      Voir les profils compatibles
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                <h2 className="text-4xl md:text-5xl font-display font-bold">
+                  Découvrez Votre Type de Connexion
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                  Répondez à 7 questions pour comprendre si vous recherchez des personnes qui vous ressemblent 
+                  ou des profils complémentaires qui enrichiront votre univers.
+                </p>
+                <Button 
+                  size="lg"
+                  onClick={() => setTestStarted(true)}
+                  className="text-lg px-10 py-7 bg-accent hover:bg-accent/90 text-accent-foreground hover-scale"
+                >
+                  <Sparkles className="mr-2 h-5 w-5" />
+                  Commencer le test maintenant
+                </Button>
+              </div>
+            ) : (
+              <PersonalityTest onComplete={handleTestComplete} />
+            )}
           </div>
         </div>
       </section>
