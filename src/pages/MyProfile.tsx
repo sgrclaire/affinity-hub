@@ -28,7 +28,7 @@ const MyProfile = () => {
                   <div className="aspect-square rounded-lg overflow-hidden mb-4">
                     <img alt="Photo de profil" className="w-full h-full object-cover" src="/lovable-uploads/c561135d-26a0-49fd-a6dd-ec69c6863a8d.jpg" />
                   </div>
-                  <Button className="w-full mb-4" variant="outline">
+                  <Button variant="outline" className="w-full mb-4 opacity-100 rounded-xl border-none">
                     Changer la photo
                   </Button>
                   
