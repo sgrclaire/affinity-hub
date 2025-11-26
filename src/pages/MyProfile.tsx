@@ -7,10 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Music, Book, Film, Settings, Heart } from "lucide-react";
-
 const MyProfile = () => {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <Navigation />
       
       <main className="pt-24 pb-20">
@@ -28,11 +26,7 @@ const MyProfile = () => {
               <Card className="shadow-[var(--shadow-3d)]">
                 <CardContent className="pt-6">
                   <div className="aspect-square rounded-lg overflow-hidden mb-4">
-                    <img 
-                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop" 
-                      alt="Photo de profil"
-                      className="w-full h-full object-cover"
-                    />
+                    <img alt="Photo de profil" className="w-full h-full object-cover" src="/lovable-uploads/c561135d-26a0-49fd-a6dd-ec69c6863a8d.jpg" />
                   </div>
                   <Button className="w-full mb-4" variant="outline">
                     Changer la photo
@@ -96,12 +90,7 @@ const MyProfile = () => {
                   
                   <div>
                     <Label htmlFor="bio">Biographie</Label>
-                    <Textarea 
-                      id="bio" 
-                      placeholder="Parlez-nous de vous..."
-                      rows={4}
-                      defaultValue="Passionnée d'art, de musique et de belles rencontres. Entre expositions et concerts, je cherche des connexions authentiques."
-                    />
+                    <Textarea id="bio" placeholder="Parlez-nous de vous..." rows={4} defaultValue="Passionnée d'art, de musique et de belles rencontres. Entre expositions et concerts, je cherche des connexions authentiques." />
                   </div>
 
                   <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
@@ -185,8 +174,6 @@ const MyProfile = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default MyProfile;
