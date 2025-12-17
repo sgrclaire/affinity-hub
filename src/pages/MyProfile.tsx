@@ -26,7 +26,7 @@ const MyProfile = () => {
               <Card className="shadow-[var(--shadow-3d)]">
                 <CardContent className="pt-6">
                   <div className="aspect-square rounded-lg overflow-hidden mb-4">
-                    <img alt="Photo de profil" className="w-full h-full object-cover" src="/lovable-uploads/c561135d-26a0-49fd-a6dd-ec69c6863a8d.jpg" />
+                    <img alt="Photo de profil" className="w-full h-full object-cover" src="/lovable-uploads/b82de856-d73d-4336-b5f2-a0f450d7717c.jpg" />
                   </div>
                   <Button variant="outline" className="w-full mb-4 opacity-100 rounded-xl border-none">
                     Changer la photo
